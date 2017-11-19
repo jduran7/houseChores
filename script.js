@@ -8,7 +8,8 @@ var roomates = [
 	"Jose"
 ];
 
-var weeks = [];
+var chores = ["Kitchen", "Living room + Hallway", "Bathroom 1", "Bathroom 2"];
+
 
 //format: dddd is day of the week in text, MMMM is month in text, DD is day of the month in number.
 function getWeek(x) {
@@ -23,8 +24,13 @@ function getWeek(x) {
 	return firstDay + " - " + lastDay;
 }
 
-for(i=0;i<21;i++){
-	weeks.push(getWeek(moment().add(i,'week')));
+function generateList(weeks){
+	var weekList = [];
+	for(i=0;i<weeks;i++){
+		weekList.push(getWeek(moment().clone().add(i,'week')));
+	}
+	return weekList;
 }
 
-console.log(weeks);
+
+console.log(generateList(21));
