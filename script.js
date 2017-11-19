@@ -1,4 +1,4 @@
-
+var moment = require('moment');
 
 var roomates = [
 	"Carolina",
@@ -8,10 +8,23 @@ var roomates = [
 	"Jose"
 ];
 
-////Generate table.
+var weeks = [];
 
-//Show current year, displays mondays of the year so that you can choose one.
+//format: dddd is day of the week in text, MMMM is month in text, DD is day of the month in number.
+function getWeek(x) {
+	var firstDay = x.day(-6).format('MMMM DD');
+	var lastDay = x.clone().add(6,"day");
+	if(lastDay.format('MMMM')!= x.format('MMMM')){
+		lastDay = lastDay.format('MMMM DD');
+	}
+	else{
+		lastDay = lastDay.format('DD');
+	}
+	return firstDay + " - " + lastDay;
+}
 
+for(i=0;i<21;i++){
+	weeks.push(getWeek(moment().add(i,'week')));
+}
 
-
-//choose one monday (starting date) and it will create table with weekly chores for 21 weeks
+console.log(weeks);
