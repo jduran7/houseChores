@@ -9,7 +9,6 @@ var roomates = [
 ];
 
 var areas = ["Kitchen", "Living room + Hallway", "Bathroom 1", "Bathroom 2"];
-var chores = {}
 
 
 //Displays that week's Monday and Sunday
@@ -57,6 +56,28 @@ function shuffle(array) {
   return copy;
 }
 
+function assignChores(people, tasks, weeks){
+  var individuals = people.length;
+  var taskNumber = tasks.length;
+  var size = (tasks.length)*weeks;
+  var sequence = [];
+  var sortedSequence = [];
+  
+  for(i=0;i<size;i++){
+    sequence.push(people[i%individuals]);
+  }
+
+  for(i=0;i<sequence.length/taskNumber;i++){
+  sortedSequence.push(sequence.slice(taskNumber*i,taskNumber*(i+1)));
+	}
+
+  return sortedSequence;
+}
+
+
+
 
 // console.log(generateList(21));
-console.log(generateList(21,1));
+// console.log(generateList(5,2));
+
+console.log(assignChores(roomates, areas, 21));
