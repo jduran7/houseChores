@@ -4,10 +4,11 @@ var people = [
 	"Person 1",
 	"Person 2",
 	"Person 3",
-	"Person 4"
+	"Person 4",
+  "Person 5"
 ];
 
-var tasks = ["Kitchen", "Living room + Hallway", "Bathroom 1", "Bathroom 2"];
+var tasks = ["Task 1", "Task 2", "Task 3", "Task 4"];
 
 
 //Displays that week's Monday and Sunday
@@ -66,7 +67,7 @@ function assignChores(people, tasks, weeks, interval){
   
   for(i=0;i<slots/interval;i++){
     // sequence.push(people[i%people.length]);
-    for(j=0;j<people.length;j++){
+    for(j=0;j<tasks.length;j++){
       sequence.push(people[(i+j)%people.length]);
     }
     sortedSequence.push(sequence);
@@ -77,9 +78,9 @@ function assignChores(people, tasks, weeks, interval){
   	finalSchedule[myList[i]] = sortedSequence[i];
   }
 
-  return finalSchedule;
+  return sortedSequence;
 }
 
 
 // console.log(generateList(5,2));
-console.log(assignChores(people, tasks, 24, 2));
+console.log(assignChores(people, tasks, 20, 2));
