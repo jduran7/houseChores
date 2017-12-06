@@ -4,8 +4,7 @@ var people = [
 	"Person 1",
 	"Person 2",
 	"Person 3",
-	"Person 4",
-	"Person 5"
+	"Person 4"
 ];
 
 var tasks = ["Kitchen", "Living room + Hallway", "Bathroom 1", "Bathroom 2"];
@@ -60,32 +59,27 @@ function shuffle(array) {
 function assignChores(people, tasks, weeks, interval){
   people = shuffle(people);
   var myList = generateList(weeks, interval);
-  var individuals = people.length;
-  var taskNumber = tasks.length;
-  var size = (tasks.length)*weeks;
+  var slots = (tasks.length)*weeks/interval;
   var sequence = [];
   var sortedSequence = [];
   var finalSchedule = {};
   
-  for(i=0;i<size;i++){
-    sequence.push(people[i%individuals]);
+  for(i=0;i<slots/interval;i++){
+    // sequence.push(people[i%people.length]);
+    for(j=0;j<people.length;j++){
+      sequence.push(people[(i+j)%people.length]);
+    }
+    sortedSequence.push(sequence);
+    sequence = [];
   }
 
-  // for(i=0;i<sequence.length/taskNumber;i++){
-  // 	sortedSequence.push(sequence.slice(taskNumber*i,taskNumber*(i+1)));
-  // }
-
-  for(i=0;i<sequence.length/taskNumber;i++){
-  	finalSchedule[myList[i]] = sequence.slice(taskNumber*i,taskNumber*(i+1));
-  	sortedSequence.push(sequence.slice(taskNumber*i,taskNumber*(i+1)));
+  for(i=0;i<sortedSequence.length;i++){
+  	finalSchedule[myList[i]] = sortedSequence[i];
   }
 
   return finalSchedule;
 }
 
 
-
-
 // console.log(generateList(5,2));
-
-console.log(assignChores(people, tasks, 21, 1));
+console.log(assignChores(people, tasks, 24, 2));
