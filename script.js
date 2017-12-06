@@ -1,14 +1,14 @@
 var moment = require('moment');
 
-var roomates = [
-	"Carolina",
-	"Michael",
-	"Sean",
-	"Cameron",
-	"Jose"
+var people = [
+	"Person 1",
+	"Person 2",
+	"Person 3",
+	"Person 4",
+	"Person 5"
 ];
 
-var areas = ["Kitchen", "Living room + Hallway", "Bathroom 1", "Bathroom 2"];
+var tasks = ["Kitchen", "Living room + Hallway", "Bathroom 1", "Bathroom 2"];
 
 
 //Displays that week's Monday and Sunday
@@ -31,8 +31,9 @@ function generateList(weeks,interval){
 	var weekList = [];
 	for(i=0;i<weeks;i++){
 		calendar[getWeek(moment().clone().add(i,'week'),interval)] = [];
+		weekList.push(getWeek(moment().clone().add(i,'week'),interval));
 	}
-	return calendar;
+	return weekList;
 }
 
 //implementing the Fisher-Yates shuffle to randomize arrays
@@ -56,28 +57,35 @@ function shuffle(array) {
   return copy;
 }
 
-function assignChores(people, tasks, weeks){
+function assignChores(people, tasks, weeks, interval){
+  people = shuffle(people);
+  var myList = generateList(weeks, interval);
   var individuals = people.length;
   var taskNumber = tasks.length;
   var size = (tasks.length)*weeks;
   var sequence = [];
   var sortedSequence = [];
+  var finalSchedule = {};
   
   for(i=0;i<size;i++){
     sequence.push(people[i%individuals]);
   }
 
-  for(i=0;i<sequence.length/taskNumber;i++){
-  sortedSequence.push(sequence.slice(taskNumber*i,taskNumber*(i+1)));
-	}
+  // for(i=0;i<sequence.length/taskNumber;i++){
+  // 	sortedSequence.push(sequence.slice(taskNumber*i,taskNumber*(i+1)));
+  // }
 
-  return sortedSequence;
+  for(i=0;i<sequence.length/taskNumber;i++){
+  	finalSchedule[myList[i]] = sequence.slice(taskNumber*i,taskNumber*(i+1));
+  	sortedSequence.push(sequence.slice(taskNumber*i,taskNumber*(i+1)));
+  }
+
+  return finalSchedule;
 }
 
 
 
 
-// console.log(generateList(21));
 // console.log(generateList(5,2));
 
-console.log(assignChores(roomates, areas, 21));
+console.log(assignChores(people, tasks, 21, 1));
