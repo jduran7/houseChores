@@ -11,7 +11,7 @@ var people = [
 var tasks = ["Task 1", "Task 2", "Task 3", "Task 4"];
 
 
-//Displays that week's Monday and Sunday
+//Returns the Monday and Sunday of a week
 //format: dddd is day of the week in text, MMMM is month in text, DD is day of the month in number.
 function getWeek(x,interval) {
 	var firstDay = x.day(-6).format('MMMM DD');
@@ -60,13 +60,11 @@ function shuffle(array) {
 function assignChores(people, tasks, weeks, interval){
   people = shuffle(people);
   var myList = generateList(weeks, interval);
-  var slots = (tasks.length)*weeks/interval;
   var sequence = [];
   var sortedSequence = [];
   var finalSchedule = {};
   
-  for(i=0;i<slots/interval;i++){
-    // sequence.push(people[i%people.length]);
+  for(i=0;i<weeks/interval;i++){
     for(j=0;j<tasks.length;j++){
       sequence.push(people[(i+j)%people.length]);
     }
@@ -78,9 +76,9 @@ function assignChores(people, tasks, weeks, interval){
   	finalSchedule[myList[i]] = sortedSequence[i];
   }
 
-  return sortedSequence;
+  return finalSchedule;
 }
 
 
 // console.log(generateList(5,2));
-console.log(assignChores(people, tasks, 20, 2));
+console.log(assignChores(people, tasks, 10, 1));
