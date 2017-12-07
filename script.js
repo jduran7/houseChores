@@ -1,4 +1,4 @@
-var moment = require('moment');
+// var moment = require('moment');
 
 var people = [
 	"Person 1",
@@ -9,7 +9,6 @@ var people = [
 ];
 
 var tasks = ["Task 1", "Task 2", "Task 3", "Task 4"];
-
 
 //Returns Monday and Sunday of a week
 //format: dddd is day of the week (text), MMMM is month (text), DD is day of the month (number).
@@ -79,5 +78,26 @@ function assignChores(people, tasks, weeks, interval){
 }
 
 
-// console.log(generateList(5,2));
-console.log(assignChores(people, tasks, 52, 1));
+//writing the table
+var source = assignChores(people, tasks, 52, 2);
+var table = '';
+var rows = Object.keys(source);
+var cols = tasks.length;
+
+table += '<tr><td></td>' 
+for(i=0;i<tasks.length;i++){
+  table += '<td>' + tasks[i] + '</td>';
+}
+table+= '</tr>'
+
+for(r=0;r<rows.length;r++){
+  table += '<tr><td>' + rows[r] + '</td>';
+  for(c=0;c<cols;c++){
+    table += '<td>' + source[rows[r]][c] + '</td>'
+  }
+  table += '</tr>';
+}
+document.write('<table border=1>' + table + '</table>');
+
+
+// console.log(assignChores(people, tasks, 12, 1));
