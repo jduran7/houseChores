@@ -11,8 +11,8 @@ var people = [
 var tasks = ["Task 1", "Task 2", "Task 3", "Task 4"];
 
 
-//Returns the Monday and Sunday of a week
-//format: dddd is day of the week in text, MMMM is month in text, DD is day of the month in number.
+//Returns Monday and Sunday of a week
+//format: dddd is day of the week (text), MMMM is month (text), DD is day of the month (number).
 function getWeek(x,interval) {
 	var firstDay = x.day(-6).format('MMMM DD');
 	var lastDay = x.clone().add(6*interval+(interval-1),"day");
@@ -27,11 +27,9 @@ function getWeek(x,interval) {
 
 //Sets a list of Mondays and Sundays for x number of upcoming weeks as the keys of the chores object
 function generateList(weeks,interval){
-	var calendar = {};
 	var weekList = [];
-	for(i=0;i<weeks;i++){
-		calendar[getWeek(moment().clone().add(i,'week'),interval)] = [];
-		weekList.push(getWeek(moment().clone().add(i,'week'),interval));
+	for(i=0;i<weeks/interval;i++){
+		weekList.push(getWeek(moment().clone().add(i*interval,'week'),interval));
 	}
 	return weekList;
 }
@@ -57,6 +55,7 @@ function shuffle(array) {
   return copy;
 }
 
+//generates an object with dates as keys and arrays of people as values
 function assignChores(people, tasks, weeks, interval){
   people = shuffle(people);
   var myList = generateList(weeks, interval);
@@ -81,4 +80,4 @@ function assignChores(people, tasks, weeks, interval){
 
 
 // console.log(generateList(5,2));
-console.log(assignChores(people, tasks, 10, 1));
+console.log(assignChores(people, tasks, 52, 1));
